@@ -65,6 +65,7 @@
     </asset>
 
     <!-- My stuff starts here!-->
+    <!---->
     <equality>
             <weld body1="end_effector_link" body2="mocap_target"/>
     </equality>
@@ -82,13 +83,15 @@
             
         </body>
 
-        <body name="robot_base" pos="-0.55 0 0.2" zaxis="1 0 0">
+        <body name="robot_base" pos="-0.55 0 0.2" euler="0 1.5708 3.1416 ">
             <include file="gen3_lite_standalone.xml" />        
         </body>
 
+        
         <body name="mocap_target" mocap="true" pos="0.3 0 0.5">
             <geom type="sphere" size="0.03" rgba="1 0 0 0.5"/>
         </body>
+        
         
     </worldbody>
 
