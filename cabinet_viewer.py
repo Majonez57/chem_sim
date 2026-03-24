@@ -38,13 +38,22 @@ FOLDED = [0,
         math.radians(145),
         0.1,0.1,0,0,0]
 
-FLATPOS = (-0.55, -0.2, 0.2)
-FLATJOINTS = [math.radians(90),
-        math.radians(135),
-        math.radians(145),
+FLATPOS = (-0.55, 0.2, 0.2)
+FLATJOINTS = [math.radians(0),
+        math.radians(-130),
+        math.radians(-130),
         math.radians(90),
-        math.radians(159),
+        math.radians(-90),
         0.1,0.1,0,0,0]
+
+
+# FLATPOS = (-0.55, -0.2, 0.2)
+# FLATJOINTS = [math.radians(90),
+#         math.radians(100),
+#         math.radians(145),
+#         math.radians(90),
+#         math.radians(159),
+#         0.1,0.1,0,0,0]
 
 TOPPOS = (0,0,0.8)
 TOPQUAT = Rotation.from_euler('xyz',[0, 180, 0], degrees=True).as_quat()
@@ -66,9 +75,9 @@ model.body_pos[model.body("robot_base").id] = FLATPOS
 #model.body_quat[model.body("robot_base").id] = TOPQUAT
 
 
-with mujoco.viewer.launch(model, data) as viewer:
+with mujoco.viewer.launch_passive(model, data) as viewer:
     while viewer.is_running():
-        mujoco.mj_step(model, data)
+        mujoco.mj_forward(model, data)
         
         
         viewer.sync()

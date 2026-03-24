@@ -65,10 +65,11 @@
     </asset>
 
     <!-- My stuff starts here!-->
-    <!---->
+    <!--
     <equality>
             <weld body1="end_effector_link" body2="mocap_target"/>
     </equality>
+    -->
 
     <worldbody>
         <light pos="0 0 1.5" directional="true"/>
