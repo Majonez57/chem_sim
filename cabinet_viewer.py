@@ -47,6 +47,15 @@ FLATJOINTS = [math.radians(90),
         math.radians(90),
         0.1,0.1,0,0,0]
 
+
+# FLATPOS = (-0.55, -0.2, 0.2)
+# FLATJOINTS = [math.radians(90),
+#         math.radians(100),
+#         math.radians(145),
+#         math.radians(90),
+#         math.radians(159),
+#         0.1,0.1,0,0,0]
+
 TOPPOS = (0,0,0.8)
 TOPQUAT = Rotation.from_euler('xyz',[0, 180, 0], degrees=True).as_quat()
 TOPJOINTS = [0,
