@@ -31,25 +31,26 @@ def get_ee_pos(data):
 random_configuration(model)
 reachable = []
 # Launch interactive viewer
-FOLDED = [0,
+FOLDED = (-0.55, 0, 0.2)
+FOLDEDJOINTS = [0,
         math.radians(-135),
         math.radians(-150),
         math.radians(90),
         math.radians(145),
         0.1,0.1,0,0,0]
 
-FLATPOS = (-0.55, -0.2, 0.2)
+FLATPOS = (-0.55, 0.2, 0.2)
 FLATJOINTS = [math.radians(90),
-        math.radians(135),
-        math.radians(145),
+        math.radians(-135),
+        math.radians(-145),
         math.radians(90),
-        math.radians(159),
+        math.radians(90),
         0.1,0.1,0,0,0]
 
 TOPPOS = (0,0,0.8)
 TOPQUAT = Rotation.from_euler('xyz',[0, 180, 0], degrees=True).as_quat()
 TOPJOINTS = [0,
-        math.radians(-135),
+        math.radians(0),
         math.radians(-150),
         math.radians(90),
         math.radians(145),
@@ -60,15 +61,14 @@ TOPJOINTS = [0,
 
 
 
-data.qpos[:] = FLATJOINTS
-
-model.body_pos[model.body("robot_base").id] = FLATPOS
+data.qpos[:] = FOLDEDJOINTS
+model.body_pos[model.body("robot_base").id] = FOLDED
 #model.body_quat[model.body("robot_base").id] = TOPQUAT
 
 
-with mujoco.viewer.launch(model, data) as viewer:
+with mujoco.viewer.launch_passive(model, data) as viewer:
     while viewer.is_running():
-        mujoco.mj_step(model, data)
+        mujoco.mj_forward(model, data)
         
         
         viewer.sync()
