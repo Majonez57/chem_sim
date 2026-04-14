@@ -6,6 +6,7 @@ from scipy.spatial.transform import Rotation
 import time
 import math
 
+
 # Load The scene
 model = mujoco.MjModel.from_xml_path("chemscene.xml")
 data = mujoco.MjData(model)

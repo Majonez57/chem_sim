@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <mujoco model="gen3_lite scene">
 
-    <!-- Stuff from the original xml-->
     <compiler angle="radian" meshdir="assets/"/>
     <option integrator="implicitfast" cone="pyramidal" impratio="50" tolerance="1e-10" noslip_iterations="8">
         <flag gravity="disable"/>
@@ -17,7 +17,6 @@
             <geom type="mesh" group="3" condim="4" solref="0.005 1" solimp="0.9 0.95 0.001"/>
         </default>
 
-
         <joint damping="0.02" armature="0.001" limited="true"/>
 
         <default class="large_actuator">
@@ -29,7 +28,6 @@
         <default class="small_actuator">
             <position kp="400" kv="40" forcerange="-52 52" ctrllimited="true"/>
         </default>
-
 
         <default class="grip_joint">
             <joint damping="0.05" armature="0.002"/>
@@ -64,12 +62,10 @@
         <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
     </asset>
 
-    <!-- My stuff starts here!-->
-    <!--
+    <!-- IK Control: Weld end_effector_link to mocap_target -->
     <equality>
-            <weld body1="end_effector_link" body2="mocap_target"/>
+        <weld body1="end_effector_link" body2="mocap_target"/>
     </equality>
-    -->
 
     <worldbody>
         <light pos="0 0 1.5" directional="true"/>
@@ -81,19 +77,29 @@
             <geom type="box" size="0.001 0.3 0.4" pos="0.55 0 0.4" rgba="0.8 0.8 0.8 0.2"/>
             <geom type="box" size="0.001 0.3 0.4" pos="-0.55 0 0.4" rgba="0.8 0.8 0.8 0.2"/>
             <geom type="box" size="0.55 0.001 0.4" pos="0 -0.3 0.4" rgba="0.8 0.8 0.8 0.2" euler="-0.12 0 0"/>
-            
         </body>
 
         <body name="robot_base" pos="-0.55 0 0.2" euler="0 1.5708 3.1416 ">
-            <include file="gen3_lite_standalone.xml" />        
+            <include file="gen3_lite_body.xml" />        
         </body>
 
-        
-        <body name="mocap_target" mocap="true" pos="0.3 0 0.5">
-            <geom type="sphere" size="0.03" rgba="1 0 0 0.5"/>
+        <!-- mocap_target for IK control -->
+        <body name="mocap_target" mocap="true" pos="0 0 0">
         </body>
         
-        
     </worldbody>
+
+
+    <actuator>
+
+        <position class="medium_actuator" name="a_joint_1" joint="joint_1" ctrlrange="-2.68 2.68"/>
+        <position class="large_actuator" name="a_joint_2" joint="joint_2" ctrlrange="-1.1344640137963142 2.5656340004316642"/>
+        <position class="medium_actuator" name="a_joint_3" joint="joint_3" ctrlrange="-2.61 2.61"/>
+        <position class="small_actuator" name="a_joint_4" joint="joint_4" ctrlrange="-2.8797932657906435 2.8797932657906435"/>
+        <position class="small_actuator" name="a_joint_5" joint="joint_5" ctrlrange="-2.53 2.53"/>
+        <position class="small_actuator" name="a_joint_6" joint="joint_6" ctrlrange="-2.8797932657906435 2.8797932657906435"/>
+        <position class="small_actuator" name="a_gripper" joint="right_finger_bottom_joint" ctrlrange="-0.09 0.96"/>
+
+    </actuator>
 
 </mujoco>
