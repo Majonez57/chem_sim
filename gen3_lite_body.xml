@@ -1,4 +1,4 @@
-<body name="gen3_lite">
+<body name="base_link">
     <inertial pos="0.00244324 0.00015573 0.0861674" quat="0.999765 0.000276221 -0.0211882 0.00451385" mass="1.14608"
     diaginertia="0.0033632 0.003311 0.000766919"/>
     <geom class="visual" mesh="base_link"/>

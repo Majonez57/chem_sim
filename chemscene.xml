@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mujoco model="gen3_lite scene">
 
-    <compiler angle="radian" meshdir="assets/"/>
     <option integrator="implicitfast" cone="pyramidal" impratio="50" tolerance="1e-10" noslip_iterations="8">
-        <flag gravity="disable"/>
+        <flag gravity="enable"/>
     </option>
 
     <size nconmax="400" njmax="2000"/>
@@ -14,20 +13,22 @@
         <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="0.803 0.824 0.82 1"/>
         </default>
         <default class="collision">
-            <geom type="mesh" group="3" condim="4" solref="0.005 1" solimp="0.9 0.95 0.001"/>
+        <geom type="mesh" group="3" condim="4" solref="0.005 1" solimp="0.9 0.95 0.001"/>
         </default>
+
 
         <joint damping="0.02" armature="0.001" limited="true"/>
 
         <default class="large_actuator">
-            <position kp="1200" kv="80" forcerange="-105 105" ctrllimited="true"/>
+        <position kp="1200" kv="80" forcerange="-105 105" ctrllimited="true"/>
         </default>
         <default class="medium_actuator">
-            <position kp="650" kv="60" forcerange="-72 72" ctrllimited="true"/>
+        <position kp="650" kv="60" forcerange="-72 72" ctrllimited="true"/>
         </default>
         <default class="small_actuator">
-            <position kp="400" kv="40" forcerange="-52 52" ctrllimited="true"/>
+        <position kp="400" kv="40" forcerange="-52 52" ctrllimited="true"/>
         </default>
+
 
         <default class="grip_joint">
             <joint damping="0.05" armature="0.002"/>
@@ -47,13 +48,14 @@
         <mesh name="left_finger_prox_link" file="left_finger_prox_link.stl"/>
         <mesh name="left_finger_dist_link" file="left_finger_dist_link.stl"/>
     </asset>
+
     
     <statistic center="0.3 0 0.45" extent="0.8" meansize="0.05"/>
     
     <visual>
         <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
         <rgba haze="0.15 0.25 0.35 1"/>
-    <global azimuth="120" elevation="-20"/>
+        <global azimuth="120" elevation="-20"/>
     </visual>
 
     <asset>
@@ -64,9 +66,16 @@
 
     <!-- IK Control: Weld end_effector_link to mocap_target -->
     <equality>
-        <weld body1="end_effector_link" body2="mocap_target"/>
+        <!-- <weld body1="end_effector_link" body2="mocap_target"/> -->
+        <joint joint1="left_finger_bottom_joint" joint2="right_finger_bottom_joint" polycoef="0 -1 0 0 0" 
+               solref="0.01 1" solimp="0.95 0.99 0.001"/>
+        <joint joint1="right_finger_tip_joint" joint2="right_finger_bottom_joint" polycoef="0.149 -0.676 0 0 0"
+               solref="0.01 1" solimp="0.95 0.99 0.001"/>
+        <joint joint1="left_finger_tip_joint" joint2="right_finger_bottom_joint" polycoef="0.149 -0.676 0 0 0"
+               solref="0.01 1" solimp="0.95 0.99 0.001"/>
     </equality>
 
+    <!-- Setup the world -->
     <worldbody>
         <light pos="0 0 1.5" directional="true"/>
         <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
@@ -84,11 +93,17 @@
         </body>
 
         <!-- mocap_target for IK control -->
-        <body name="mocap_target" mocap="true" pos="0 0 0">
+        <!-- <body name="mocap_target" mocap="true" pos="0 0 0"> -->
         </body>
         
     </worldbody>
 
+    <contact>
+        <exclude body1="right_finger_prox_link" body2="right_finger_dist_link"/>
+        <exclude body1="left_finger_prox_link" body2="left_finger_dist_link"/>
+        <exclude body1="gripper_base_link" body2="right_finger_prox_link"/>
+        <exclude body1="gripper_base_link" body2="left_finger_prox_link"/>
+    </contact>
 
     <actuator>
 
@@ -101,5 +116,16 @@
         <position class="small_actuator" name="a_gripper" joint="right_finger_bottom_joint" ctrlrange="-0.09 0.96"/>
 
     </actuator>
+
+    <sensor>
+
+    <force name="ee_force" site="ee_site"/>
+        <torque name="ee_torque" site="ee_site"/>
+
+        <jointpos name="q_right_bottom" joint="right_finger_bottom_joint"/>
+        <jointpos name="q_left_bottom" joint="left_finger_bottom_joint"/>
+        <jointpos name="q_right_tip" joint="right_finger_tip_joint"/>
+        <jointpos name="q_left_tip" joint="left_finger_tip_joint"/>
+    </sensor>
 
 </mujoco>
