@@ -112,7 +112,6 @@
 
 
 <equality>
-
 <joint joint1="left_finger_bottom_joint" joint2="right_finger_bottom_joint" polycoef="0 -1 0 0 0" solref="0.01 1"
     solimp="0.95 0.99 0.001"/>
 
@@ -122,38 +121,6 @@
     solref="0.01 1" solimp="0.95 0.99 0.001"/>
 </equality>
 
-
-<contact>
-<exclude body1="right_finger_prox_link" body2="right_finger_dist_link"/>
-<exclude body1="left_finger_prox_link" body2="left_finger_dist_link"/>
-<exclude body1="gripper_base_link" body2="right_finger_prox_link"/>
-<exclude body1="gripper_base_link" body2="left_finger_prox_link"/>
-</contact>
-
-<actuator>
-
-<position class="medium_actuator" name="a_joint_1" joint="joint_1" ctrlrange="-2.68 2.68"/>
-<position class="large_actuator" name="a_joint_2" joint="joint_2" ctrlrange="-1.1344640137963142 2.5656340004316642"/>
-<position class="medium_actuator" name="a_joint_3" joint="joint_3" ctrlrange="-2.61 2.61"/>
-<position class="small_actuator" name="a_joint_4" joint="joint_4" ctrlrange="-2.8797932657906435 2.8797932657906435"/>
-<position class="small_actuator" name="a_joint_5" joint="joint_5" ctrlrange="-2.53 2.53"/>
-<position class="small_actuator" name="a_joint_6" joint="joint_6" ctrlrange="-2.8797932657906435 2.8797932657906435"/>
-
-
-<position class="small_actuator" name="a_gripper" joint="right_finger_bottom_joint" ctrlrange="-0.09 0.96"/>
-</actuator>
-
-
-<sensor>
-
-<force name="ee_force" site="ee_site"/>
-<torque name="ee_torque" site="ee_site"/>
-
-<jointpos name="q_right_bottom" joint="right_finger_bottom_joint"/>
-<jointpos name="q_left_bottom" joint="left_finger_bottom_joint"/>
-<jointpos name="q_right_tip" joint="right_finger_tip_joint"/>
-<jointpos name="q_left_tip" joint="left_finger_tip_joint"/>
-</sensor>
 
 <keyframe>
 
